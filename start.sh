@@ -12,5 +12,6 @@ git clone https://github.com/bigchaindb/bigchaindb
 
 cp -f ./docker-compose.yml ./bigchaindb/docker-compose.yml;
 
+cd bigchaindb;
 docker-compose build bigchaindb &&
 docker-compose run -d bdb;
