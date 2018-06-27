@@ -29,7 +29,7 @@ services:
       - mongodb
       - tendermint
     build:
-      context: .
+      context: ./bigchaindb/
       dockerfile: ./bigchaindb/Dockerfile-dev
       args:
         backend: localmongodb
@@ -85,7 +85,7 @@ services:
   # BigchainDB setup to do acceptance testing with Python
   python-acceptance:
     build:
-      context: .
+      context: ./bigchaindb/
       dockerfile: ./bigchaindb/acceptance/python/Dockerfile
     volumes:
       - ./bigchaindb/acceptance/python/docs:/docs
@@ -100,7 +100,7 @@ services:
     depends_on:
       - vdocs
     build:
-      context: .
+      context: ./bigchaindb/
       dockerfile: ./bigchaindb/Dockerfile-dev
       args:
         backend: localmongodb
