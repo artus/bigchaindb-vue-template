@@ -1,16 +1,14 @@
-version: "3"
+version: '2.1'
 
-services: 
+services:
 
   nginx:
     container_name: nginx
     build:
       context: .
-      dockerfile: ./nginx/Dockerfile
+      dockerfile: ./../Dockerfile
     image: nginx
     restart: always
-    volumes:
-      - ./:/usr/share/nginx/html/
     ports:
       - 80:80
     depends_on:
@@ -29,19 +27,19 @@ services:
       - mongodb
       - tendermint
     build:
-      context: ./bigchaindb/
-      dockerfile: ./bigchaindb/Dockerfile-dev
+      context: .
+      dockerfile: Dockerfile-dev
       args:
         backend: localmongodb
     volumes:
-      - ./bigchaindb/bigchaindb:/usr/src/app/bigchaindb
-      - ./bigchaindb/tests:/usr/src/app/tests
-      - ./bigchaindb/docs:/usr/src/app/docs
-      - ./bigchaindb/htmlcov:/usr/src/app/htmlcov
-      - ./bigchaindb/setup.py:/usr/src/app/setup.py
-      - ./bigchaindb/setup.cfg:/usr/src/app/setup.cfg
-      - ./bigchaindb/pytest.ini:/usr/src/app/pytest.ini
-      - ./bigchaindb/tox.ini:/usr/src/app/tox.ini
+      - ./bigchaindb:/usr/src/app/bigchaindb
+      - ./tests:/usr/src/app/tests
+      - ./docs:/usr/src/app/docs
+      - ./htmlcov:/usr/src/app/htmlcov
+      - ./setup.py:/usr/src/app/setup.py
+      - ./setup.cfg:/usr/src/app/setup.cfg
+      - ./pytest.ini:/usr/src/app/pytest.ini
+      - ./tox.ini:/usr/src/app/tox.ini
     environment:
       BIGCHAINDB_DATABASE_BACKEND: localmongodb
       BIGCHAINDB_DATABASE_HOST: mongodb
@@ -60,7 +58,7 @@ services:
       interval: 3s
       timeout: 5s
       retries: 3
-    command: './bigchaindb/ci/entrypoint.sh'
+    command: '.ci/entrypoint.sh'
   tendermint:
     image: tendermint/tendermint:0.19.9
     # volumes:
@@ -85,11 +83,11 @@ services:
   # BigchainDB setup to do acceptance testing with Python
   python-acceptance:
     build:
-      context: ./bigchaindb/
-      dockerfile: ./bigchaindb/acceptance/python/Dockerfile
+      context: .
+      dockerfile: ./acceptance/python/Dockerfile
     volumes:
-      - ./bigchaindb/acceptance/python/docs:/docs
-      - ./bigchaindb/acceptance/python/src:/src
+      - ./acceptance/python/docs:/docs
+      - ./acceptance/python/src:/src
     environment:
       - BIGCHAINDB_ENDPOINT=bigchaindb
 
@@ -100,16 +98,16 @@ services:
     depends_on:
       - vdocs
     build:
-      context: ./bigchaindb/
-      dockerfile: ./bigchaindb/Dockerfile-dev
+      context: .
+      dockerfile: Dockerfile-dev
       args:
         backend: localmongodb
     volumes:
-      - ./bigchaindb/:/usr/src/app/
+      - .:/usr/src/app/
     command: make -C docs/server html
   vdocs:
     image: nginx
     ports:
       - '33333:80'
     volumes:
-      - ./bigchaindb/docs/server/build/html:/usr/share/nginx/html
+      - ./docs/server/build/html:/usr/share/nginx/html
