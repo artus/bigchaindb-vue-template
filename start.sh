@@ -5,7 +5,7 @@ npm run build;
 git clone https://github.com/bigchaindb/bigchaindb;
 
 if [ -d "bigchaindb" ]; then
-  rm -rf bigchaindb;
+  sudo rm -rf bigchaindb;
 fi;
 
 git clone https://github.com/bigchaindb/bigchaindb

@@ -5,8 +5,7 @@ services:
   nginx:
     container_name: nginx
     build:
-      context: .
-      dockerfile: ./../Dockerfile
+      context: ./../
     image: nginx
     restart: always
     ports:
@@ -26,6 +25,7 @@ services:
     depends_on:
       - mongodb
       - tendermint
+      - nginx
     build:
       context: .
       dockerfile: Dockerfile-dev
