@@ -7,18 +7,18 @@
 Simply run the start script:
 
 ```shell
-chmod +x ./start.sh;
+chmod +x ./start.sh ./stop.sh ./down.sh;
 ./start.sh;
 ```
 
 To stop the service:
 
 ```shell
-docker-compose stop;
+./stop.sh;
 ```
 
 To remove the service:
 
 ```shell
-docker-compose down;
+./down.sh;
 ```
