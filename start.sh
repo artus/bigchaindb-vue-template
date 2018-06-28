@@ -1,7 +1,10 @@
 #!/bin/bash
 
+cd ./vue;
 npm install;
 npm run build;
+cd ..;
+
 git clone https://github.com/bigchaindb/bigchaindb;
 
 if [ -d "bigchaindb" ]; then
